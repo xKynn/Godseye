@@ -38,7 +38,7 @@ class Godseye(commands.Bot):
             with open("conf.json") as js:
                 dat = json.load(js)
             for user in dat['users']:
-                mem = self.dg.get_member_named(user) # Get user
+                mem = self.dg.get_member(user) # Get user
                 for role in dat['autoroles']: #Check roles from DB
                     exists = False #Check if user has role
                     for urole in mem.roles:
@@ -49,7 +49,8 @@ class Godseye(commands.Bot):
                     if (t - dat['users'][user]) >= dat['autoroles'][role]:
                         for s_role in self.dg.roles:
                             if s_role.name == role:
-                                mem.add_roles([s_role, ], reason="Autorole")
+                                await mem.add_roles([s_role, ], reason="Autorole")
+                                break
 
             await asyncio.sleep(10*60)
 
@@ -108,3 +109,4 @@ class Godseye(commands.Bot):
               f'{self.user.name}\n'
               f'{self.user.id}\n'
               '--------------------------')
+        self.loop.create_task(autorole_check)
