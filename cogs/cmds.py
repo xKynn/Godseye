@@ -1,5 +1,8 @@
+import base64
 import json
+import requests
 from discord.ext import commands
+from io import BytesIO
 
 class Commands(commands.Cog):
     def __init__(self, bot):
@@ -7,7 +10,7 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def autorole(self, ctx):
-        """ Set autorole rules. """
+        """ [role] [time] - `O`"""
         if not ctx.author.id == self.bot.dg.owner.id:
             return await ctx.error("Insufficient permissions. Must be server owner.")
         with open("conf.json") as js:
@@ -16,7 +19,9 @@ class Commands(commands.Cog):
             tx = "Roles:\n"
             for rl in dat['autoroles']:
                 grl = self.bot.dg.get_role(int(rl))
-                tx += f"`{grl.name}` - {dat['autoroles'][rl]/(60*60)}hrs\n"
+                tx += f"`{grl.name}` - {dat['autoroles'][rl]/(60*60)} hrs\n"
+            if not dat['autoroles']:
+                tx += "No autoroles setup. Please use the `>>autorole` command."
             return await ctx.embed_reply(tx)
         trole = ctx.message.content.split(" ")[-2]
         role = None
@@ -46,23 +51,28 @@ class Commands(commands.Cog):
         with open("conf.json", 'w') as js:
             json.dump(dat, js)
 
-        await ctx.embed_reply(msg=f"Successfully Added {role.name} as an autorole "
-                                  f"which will be added after {timer} hours.", delete_after=5)
+        await ctx.embed_reply(msg=f"Successfully Added `{role.name}` as an autorole "
+                                  f"which will be added after `{timer/(60*60)}` hours.", delete_after=5)
 
     @commands.command()
     async def purge(self, ctx):
-        """ Purge a certain amount of messages from a channel. """
+        """ [user] [number] - `M`"""
         if not ctx.author.permissions_in(ctx.channel).manage_messages:
-            return await ctx.error("Insufficient permissions. `Manage Messages` is required.")
+            return await ctx.error("Insufficient permissions. `Manage Messages` is required.", delete_after=5)
 
         if ctx.message.mentions:
             user = ctx.message.mentions[0]
         else:
             user = None
         try:
-            amount = int(ctx.message.content.split[" "][-1])
+            amount = int(ctx.message.content.split(" ")[-1])
         except:
-            amount = 100
+            return await ctx.error("Please enter a value for amount of messages to delete.", delete_after=5)
+
+        if amount > 10:
+            amount = 10
+
+        print("Delete amount", amount)
 
         counter = 0
         if user:
@@ -84,9 +94,9 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def wipe(self, ctx):
-        """ Wipe a mentioned user's messages from a channel. """
+        """ [user] - `O`"""
         if not ctx.author.id == self.bot.dg.owner.id:
-            return await ctx.error("Insufficient permissions. Must be server owner.")
+            return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
 
         if ctx.message.mentions:
             user = ctx.message.mentions[0]
@@ -106,14 +116,14 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def mute(self, ctx):
-        """ Mute a mentioned user. """
+        """ [user] - `M`"""
         if not ctx.author.permissions_in(ctx.channel).manage_messages:
-            return await ctx.error("Insufficient permissions. `Manage Messages` is required.")
+            return await ctx.error("Insufficient permissions. `Manage Messages` is required.", delete_after=5)
 
         if ctx.message.mentions:
             user = ctx.message.mentions[0]
         else:
-            return await ctx.error("Please mention a user.")
+            return await ctx.error("Please mention a user.", delete_after=5)
 
         with open("conf.json") as f:
             dat = json.load(f)
@@ -130,9 +140,9 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def mutelist(self, ctx):
-        """ List of muted users. """
-        # if not ctx.author.permissions_in(ctx.channel).manage_messages:
-        #     return await ctx.error("Insufficient permissions. `Manage Messages` is required.")
+        """  - `M`"""
+        if not ctx.author.permissions_in(ctx.channel).manage_messages:
+            return await ctx.error("Insufficient permissions. `Manage Messages` is required.", delete_after=5)
 
 
         with open("conf.json") as f:
@@ -155,14 +165,14 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def unmute(self, ctx):
-        """ Unmute a mentioned user. """
+        """ [user] - `M`"""
         if not ctx.author.permissions_in(ctx.channel).manage_messages:
-            return await ctx.error("Insufficient permissions. `Manage Messages` is required.")
+            return await ctx.error("Insufficient permissions. `Manage Messages` is required.", delete_after=5)
 
         if ctx.message.mentions:
             user = ctx.message.mentions[0]
         else:
-            return await ctx.error("Please mention a user.")
+            return await ctx.error("Please mention a user.", delete_after=5)
 
         with open("conf.json") as f:
             dat = json.load(f)
@@ -180,6 +190,19 @@ class Commands(commands.Cog):
         self.bot.update_quick_access(dat)
 
         await ctx.embed_reply(msg=f"Successfully unmuted `{user.display_name}`.", delete_after=5)
+
+    @commands.command()
+    async def icon(self, ctx):
+        """ """
+        if not ctx.author.id == self.bot.dg.owner.id:
+            return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
+        url = ctx.message.content.split(" ")[-1]
+        if "http" not in url:
+            return await ctx.error("Please submit valid image URL.", delete_after=5)
+
+        await self.bot.user.edit(avatar=requests.get(url).content)
+        await ctx.embed_reply(msg=f"Successfully changed avatar.", delete_after=5)
+
 
 def setup(bot):
     bot.add_cog(Commands(bot))

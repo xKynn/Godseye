@@ -18,10 +18,19 @@ class Help(commands.Cog):
 
         em = discord.Embed(title='Help', color=self.color)
 
+        ut = [c for c in self.bot.commands]
+        ut.sort(key=lambda x: x.name)
+        tx = "`O` **autorole** [role] [time]\n" \
+             "`O` **icon** [url]\n" \
+             "`M` **mute** [user]\n"\
+             "`M` **mutelist**\n"\
+             "`M` **purge** [user] [number]\n"\
+             "`M` **unmute** [user]\n"\
+             "`O` **wipe** [user]\n"\
 
         # This can't go in the init because help isn't loaded last & thus misses some commands
-        em.add_field(name="Commands", value=' • '+'\n • '.join(f"***{c.name}*** - {c.short_doc}" for c in self.bot.commands if
-                                                               c.name not in ['pob', 'link', 'convert']))
+        em.add_field(name="Commands", value=tx)
+        em.add_field(name="Key", value="`O` - Owner\n`M` - Manage Messages", inline=False)
         try:
             await ctx.send(embed=em)
         except:
