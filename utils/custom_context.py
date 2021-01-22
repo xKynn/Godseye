@@ -10,7 +10,11 @@ class GodseyeContext(commands.Context):
 
         m = await self.send(embed=em, delete_after=delete_after)
         return m
-        
-    async def reply(self, content: str, *, embed: discord.Embed = None):
-        """ replies with mention """
-        await self.send(f'{content}\n{self.author.mention}', embed=embed)
+
+    async def embed_reply(self, msg: str, delete_after=None):
+        em = discord.Embed(title='Command Completed',
+                           color=discord.Color.green(),
+                           description=msg.format())
+
+        m = await self.send(embed=em, delete_after=delete_after)
+        return m

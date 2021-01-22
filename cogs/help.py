@@ -30,7 +30,7 @@ class Help(commands.Cog):
     @help.command(name='command', aliases=['cmd', 'commands'])
     async def help_command(self, ctx, *, cmd_name: str=None):
         """ Sends help for a specific command """
-        bot_prefix = '@Randy '
+        bot_prefix = '>>'
         # Get command object
         cmd_obj = self.cmd(cmd_name)
 
