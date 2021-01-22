@@ -60,12 +60,12 @@ class Godseye(commands.Bot):
                 for user in dat['users']:
                     prev_roles = []
                     mem = self.dg.get_member(int(user)) # Get user
-                    print(mem.name)
-                    print(mem.roles)
+                    #print(mem.name)
+                    #print(mem.roles)
                     rolectr = 0
                     for rl in mem.roles:
                         if str(rl.id) not in dat['autoroles']:
-                            print("Natural Role, ", rl.name)
+                            #print("Natural Role, ", rl.name)
                             rolectr +=1
 
                     if rolectr > 1:
@@ -81,13 +81,13 @@ class Godseye(commands.Bot):
                             if str(urole.id) == role:
                                 prev_roles.append(urole)
                                 exists = True
-                                print("has ", urole.name)
+                                #print("has ", urole.name)
 
 
                         if exists: continue
                         t = time.time()
                         if (t - dat['users'][user]) >= dat['autoroles'][role]:
-                            print("Time for", s_role.name)
+                            #print("Time for", s_role.name)
                             if prev_roles:
                                 for pr in prev_roles:
                                     await mem.remove_roles(pr, reason="Autorole Promotion")
@@ -169,8 +169,7 @@ class Godseye(commands.Bot):
         # for mem in self.dg.members:
         #     print(mem.name)
         for mem in self.dg.members:
-            # if mem != self.dg.owner and mem.id != self.user.id:
-            if mem.id != self.user.id:
+            if mem != self.dg.owner and mem.id != self.user.id:
                 # print(mem.name)
                 if str(mem.id) not in dat['users']:
                     dat['users'][str(mem.id)] = time.time()
