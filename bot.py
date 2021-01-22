@@ -98,7 +98,7 @@ class Godseye(commands.Bot):
             #     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             #     print(exc_type, fname, exc_tb.tb_lineno)
 
-                await asyncio.sleep(5)
+                await asyncio.sleep(60*10)
 
 
     def run(self):
