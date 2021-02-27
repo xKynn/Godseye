@@ -2,7 +2,8 @@ import base64
 import json
 import requests
 from discord.ext import commands
-from discord import CustomActivity
+from discord import Activity
+from discord import ActivityType
 from io import BytesIO
 
 class Commands(commands.Cog):
@@ -212,7 +213,7 @@ class Commands(commands.Cog):
         stattext = ctx.message.content.split(" ")
         status = " ".join(stattext[1:len(stattext)])
         print(status)
-        gm = CustomActivity(name=status)
+        gm = Activity(name=status, type=ActivityType.watching)
 
         await self.bot.change_presence(activity=gm)
         await ctx.embed_reply(msg=f"Successfully changed presence.", delete_after=5)
