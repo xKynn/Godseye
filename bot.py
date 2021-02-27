@@ -177,4 +177,7 @@ class Godseye(commands.Bot):
         with open("conf.json", 'w') as js:
             json.dump(dat, js)
 
+        gm = CustomActivity("Powered by Depression")
+        await self.change_presence(activity=gm)
+
         self.loop.create_task(self.autorole_check())
