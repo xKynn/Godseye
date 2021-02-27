@@ -207,10 +207,11 @@ class Commands(commands.Cog):
     @commands.command()
     async def status(self, ctx):
         """ """
-        if not ctx.author.id == self.bot.dg.owner.id:
-            return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
+        # if not ctx.author.id == self.bot.dg.owner.id:
+        #     return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
         stattext = ctx.message.content.split(" ")
         status = " ".join(stattext[1:len(stattext)])
+        print(status)
         gm = Game(name=status)
 
         await self.bot.change_presence(activity=gm)
