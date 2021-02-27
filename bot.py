@@ -32,8 +32,6 @@ class Godseye(commands.Bot):
         # aiohttp session
         self.session = aiohttp.ClientSession(loop=self.loop)
 
-        act = CustomActivity("Powered by Depression™")
-        self.activity = act
 
         # Make room for the help command
         self.remove_command('help')
