@@ -214,7 +214,7 @@ class Commands(commands.Cog):
         print(status)
         gm = CustomActivity(name=status)
 
-        await ctx.change_presence(activity=gm)
+        await self.bot.change_presence(activity=gm)
         await ctx.embed_reply(msg=f"Successfully changed presence.", delete_after=5)
 
 def setup(bot):

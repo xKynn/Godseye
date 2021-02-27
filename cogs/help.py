@@ -26,8 +26,8 @@ class Help(commands.Cog):
              "`M` **mutelist**\n"\
              "`M` **purge** [user] [number]\n"\
              "`M` **unmute** [user]\n"\
-             "`O` **wipe** [user]\n"\
-
+             "`O` **wipe** [user]\n" \
+             "`O` **status** [message]\n" \
         # This can't go in the init because help isn't loaded last & thus misses some commands
         em.add_field(name="Commands", value=tx)
         em.add_field(name="Key", value="`O` - Owner\n`M` - Manage Messages", inline=False)
