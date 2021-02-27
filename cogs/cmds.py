@@ -2,7 +2,7 @@ import base64
 import json
 import requests
 from discord.ext import commands
-from discord import Game
+from discord import CustomActivity
 from io import BytesIO
 
 class Commands(commands.Cog):
@@ -207,14 +207,14 @@ class Commands(commands.Cog):
     @commands.command()
     async def status(self, ctx):
         """ """
-        # if not ctx.author.id == self.bot.dg.owner.id:
-        #     return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
+        if not ctx.author.id == self.bot.dg.owner.id:
+            return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
         stattext = ctx.message.content.split(" ")
         status = " ".join(stattext[1:len(stattext)])
         print(status)
-        gm = Game(name=status)
+        gm = CustomActivity(name=status)
 
-        await self.bot.change_presence(activity=gm)
+        await ctx.change_presence(activity=gm)
         await ctx.embed_reply(msg=f"Successfully changed presence.", delete_after=5)
 
 def setup(bot):

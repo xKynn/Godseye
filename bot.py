@@ -175,5 +175,4 @@ class Godseye(commands.Bot):
             json.dump(dat, js)
 
 
-
         self.loop.create_task(self.autorole_check())
