@@ -211,7 +211,7 @@ class Commands(commands.Cog):
             return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
         stattext = ctx.message.content.split(" ")
         status = " ".join(stattext[1:len(stattext)])
-        gm = Game(status)
+        gm = Game(name=status)
 
         await self.bot.change_presence(activity=gm)
         await ctx.embed_reply(msg=f"Successfully changed presence.", delete_after=5)

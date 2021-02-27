@@ -175,7 +175,7 @@ class Godseye(commands.Bot):
         with open("conf.json", 'w') as js:
             json.dump(dat, js)
 
-        gm = Game("Powered by Depression")
+        gm = Game(name="Powered by Depression")
         await self.change_presence(activity=gm)
 
 
