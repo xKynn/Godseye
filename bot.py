@@ -60,10 +60,13 @@ class Godseye(commands.Bot):
                     #print(mem.name)
                     #print(mem.roles)
                     rolectr = 0
-                    for rl in mem.roles:
-                        if str(rl.id) not in dat['autoroles']:
-                            #print("Natural Role, ", rl.name)
-                            rolectr +=1
+                    try:
+                        for rl in mem.roles:
+                            if str(rl.id) not in dat['autoroles']:
+                                #print("Natural Role, ", rl.name)
+                                rolectr +=1
+                    except:
+                        continue
 
                     if rolectr > 1:
                         continue
