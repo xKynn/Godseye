@@ -7,7 +7,7 @@ import time
 
 from discord.ext import commands
 from discord import Intents
-from discord import CustomActivity
+from discord import Game
 from pathlib import Path
 from utils.custom_context import GodseyeContext
 
@@ -177,7 +177,8 @@ class Godseye(commands.Bot):
         with open("conf.json", 'w') as js:
             json.dump(dat, js)
 
-        gm = CustomActivity("Powered by Depression")
+        gm = Game("Powered by Depression")
         await self.change_presence(activity=gm)
+
 
         self.loop.create_task(self.autorole_check())

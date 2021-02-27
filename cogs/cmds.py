@@ -2,7 +2,7 @@ import base64
 import json
 import requests
 from discord.ext import commands
-from discord import CustomActivity
+from discord import Game
 from io import BytesIO
 
 class Commands(commands.Cog):
@@ -211,7 +211,7 @@ class Commands(commands.Cog):
             return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
         stattext = ctx.message.content.split(" ")
         status = " ".join(stattext[1:len(stattext)])
-        gm = CustomActivity(status)
+        gm = Game(status)
 
         await self.bot.change_presence(activity=gm)
         await ctx.embed_reply(msg=f"Successfully changed presence.", delete_after=5)
