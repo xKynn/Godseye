@@ -2,10 +2,13 @@ import aiohttp
 import asyncio
 import os
 import sys
+import random
 import json
 import time
 
 from discord.ext import commands
+from discord import Embed
+from discord import Color
 from discord import Intents
 from pathlib import Path
 from utils.custom_context import GodseyeContext
@@ -92,6 +95,10 @@ class Godseye(commands.Bot):
                                 for pr in prev_roles:
                                     await mem.remove_roles(pr, reason="Autorole Promotion")
                             await mem.add_roles(s_role, reason="Autorole")
+                            em = Embed(description=f"{mem.name} has been promoted to {s_role.name} for "
+                                                   f"fulfilling the autorole duration.",
+                                       color=random.choice(self.rainbow))
+                            await self.chronicle.send(embed=em)
                             break
             # except Exception as exc:
             #     exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -163,8 +170,16 @@ class Godseye(commands.Bot):
               '--------------------------')
         with open('conf.json') as f:
             dat = json.load(f)
+        self.chronicle = await self.get_channel(645817242340294677)
         self.quick_access = dat
-
+        self.rainbow = [Color.from_rgb(148, 0, 211),
+                        Color.from_rgb(75, 0, 30),
+                        Color.from_rgb(0, 0, 255),
+                        Color.from_rgb(0, 255, 0),
+                        Color.from_rgb(255, 255, 0),
+                        Color.from_rgb(255, 127, 0),
+                        Color.from_rgb(255, 0, 0),
+                        ]
         #await self.dg.chunk()
         # for mem in self.dg.members:
         #     print(mem.name)
