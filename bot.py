@@ -170,7 +170,7 @@ class Godseye(commands.Bot):
               '--------------------------')
         with open('conf.json') as f:
             dat = json.load(f)
-        self.chronicle = await self.get_channel(645817242340294677)
+        self.chronicle = self.get_channel(645817242340294677)
         self.quick_access = dat
         self.rainbow = [Color.from_rgb(148, 0, 211),
                         Color.from_rgb(75, 0, 30),
