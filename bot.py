@@ -47,8 +47,8 @@ class Godseye(commands.Bot):
         self.quick_access = js
 
     async def autorole_check(self):
+        rainbowctr = 0
         while 1:
-                rainbowctr = 0
                 print("Iter")
                 with open("conf.json") as js:
                     dat = json.load(js)
