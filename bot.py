@@ -4,7 +4,7 @@ import os
 import sys
 import random
 import json
-import time
+import datetime
 
 from discord.ext import commands
 from discord import Embed
@@ -55,7 +55,7 @@ class Godseye(commands.Bot):
                     if mem != self.dg.owner and mem.id != self.user.id:
                         # print(mem.name)
                         if str(mem.id) not in dat['users']:
-                            dat['users'][str(mem.id)] = time.time()
+                            dat['users'][str(mem.id)] = datetime.datetime.now().timestamp()
 
                 for user in dat['users']:
                     prev_roles = []
@@ -88,8 +88,8 @@ class Godseye(commands.Bot):
 
 
                         if exists: continue
-                        t = time.time()
-                        if (t - dat['users'][user]) >= dat['autoroles'][role]:
+                        t = datetime.datetime.now()
+                        if (t - mem.joined_at).timestamp() >= dat['autoroles'][role]:
                             #print("Time for", s_role.name)
                             if prev_roles:
                                 for pr in prev_roles:
@@ -133,7 +133,7 @@ class Godseye(commands.Bot):
         with open("conf.json") as js:
             dat = json.load(js)
         if mem.id not in dat['users']:
-            dat['users'][mem.id] = time.time()
+            dat['users'][mem.id] = datetime.datetime.now().timestamp()
         with open("conf.json", 'w') as js:
             json.dump(dat, js)
 
@@ -187,7 +187,7 @@ class Godseye(commands.Bot):
             if mem != self.dg.owner and mem.id != self.user.id:
                 # print(mem.name)
                 if str(mem.id) not in dat['users']:
-                    dat['users'][str(mem.id)] = time.time()
+                    dat['users'][str(mem.id)] = datetime.datetime.now().timestamp()
 
         with open("conf.json", 'w') as js:
             json.dump(dat, js)
