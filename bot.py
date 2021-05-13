@@ -89,7 +89,7 @@ class Godseye(commands.Bot):
 
                         if exists: continue
                         t = datetime.datetime.now()
-                        if (t - mem.joined_at).timestamp() >= dat['autoroles'][role]:
+                        if (t - mem.joined_at).total_seconds() >= dat['autoroles'][role]:
                             #print("Time for", s_role.name)
                             if prev_roles:
                                 for pr in prev_roles:
