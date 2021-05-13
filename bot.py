@@ -48,6 +48,7 @@ class Godseye(commands.Bot):
 
     async def autorole_check(self):
         while 1:
+                rainbowctr = 0
                 print("Iter")
                 with open("conf.json") as js:
                     dat = json.load(js)
@@ -99,6 +100,10 @@ class Godseye(commands.Bot):
                                                    f"fulfilling the autorole duration.",
                                        color=random.choice(self.rainbow))
                             await self.chronicle.send(embed=em)
+                            if rainbowctr != 6:
+                                rainbowctr += 1
+                            else:
+                                rainbowctr = 0
                             break
             # except Exception as exc:
             #     exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -173,7 +178,7 @@ class Godseye(commands.Bot):
         self.chronicle = self.get_channel(645817242340294677)
         self.quick_access = dat
         self.rainbow = [Color.from_rgb(148, 0, 211),
-                        Color.from_rgb(75, 0, 30),
+                        Color.from_rgb(75, 0, 130),
                         Color.from_rgb(0, 0, 255),
                         Color.from_rgb(0, 255, 0),
                         Color.from_rgb(255, 255, 0),
