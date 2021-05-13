@@ -98,7 +98,7 @@ class Godseye(commands.Bot):
                             await mem.add_roles(s_role, reason="Autorole")
                             em = Embed(description=f"{mem.name} has been promoted to {s_role.name} for "
                                                    f"fulfilling the autorole duration.",
-                                       color=random.choice(self.rainbow))
+                                       color=self.rainbow[rainbowctr])
                             await self.chronicle.send(embed=em)
                             if rainbowctr != 6:
                                 rainbowctr += 1
