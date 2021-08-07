@@ -102,17 +102,25 @@ class Commands(commands.Cog):
 
         if ctx.message.mentions:
             user = ctx.message.mentions[0]
+            uid = None
         else:
-            return await ctx.error("Please mention a user.")
+            uid = ctx.message.content.split(" ")[1]
+            user = None
+            if len(uid) < 2:
+                return await ctx.error("Please mention a user.")
+            else:
+                uid = int(uid)
 
         counter = 0
         async with ctx.channel.typing():
             for c in ctx.guild.text_channels:
                 async for message in c.history(limit=30000):
-                    if message.author == user:
+                    if user and message.author == user:
                         await message.delete()
                         counter += 1
-
+                    elif uid and message.author.id == uid:
+                        await message.delete()
+                        counter += 1
 
         await ctx.embed_reply(msg=f"Successfully Deleted {counter} messages.", delete_after=5)
 

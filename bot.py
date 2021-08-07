@@ -46,6 +46,23 @@ class Godseye(commands.Bot):
     def update_quick_access(self, js):
         self.quick_access = js
 
+    async def invite_reset(self):
+        welcome_chan = self.get_channel(645807433801007135)
+        while 1:
+            msg = None
+            async for message in welcome_chan.history(limit=1):
+                if message.author == self.user:
+                    msg = message
+            new_inv = await self.dg.create_invite(max_age=(7*24*60*60), reason="Weekly Invite")
+            if not msg:
+                await welcome_chan.send(f"""__**Discord Server Invite Link**__
+                {new_inv.url}""")
+            else:
+                await msg.edit(f"""__**Discord Server Invite Link**__
+                {new_inv.url}""")
+
+            await asyncio.sleep(7*24*60*60)
+
     async def autorole_check(self):
         rainbowctr = 0
         while 1:
@@ -199,3 +216,4 @@ class Godseye(commands.Bot):
 
 
         self.loop.create_task(self.autorole_check())
+        self.loop.create_task(self.invite_reset())
