@@ -53,7 +53,7 @@ class Godseye(commands.Bot):
             async for message in welcome_chan.history(limit=1):
                 if message.author == self.user:
                     msg = message
-            new_inv = await self.dg.create_invite(max_age=(7*24*60*60), reason="Weekly Invite")
+            new_inv = await welcome_chan.create_invite(max_age=(7*24*60*60), reason="Weekly Invite")
             if not msg:
                 await welcome_chan.send(f"""__**Discord Server Invite Link**__
                 {new_inv.url}""")
