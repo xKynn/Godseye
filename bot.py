@@ -57,7 +57,7 @@ class Godseye(commands.Bot):
             if not msg:
                 await welcome_chan.send(f"__**Discord Server Invite Link**__\n{new_inv.url}")
             else:
-                await msg.edit(f"__**Discord Server Invite Link**__\n{new_inv.url}")
+                await msg.edit(content=f"__**Discord Server Invite Link**__\n{new_inv.url}")
 
             await asyncio.sleep(7*24*60*60)
 
