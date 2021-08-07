@@ -55,9 +55,9 @@ class Godseye(commands.Bot):
                     msg = message
             new_inv = await welcome_chan.create_invite(max_age=(7*24*60*60), reason="Weekly Invite")
             if not msg:
-                await welcome_chan.send(f"__**Discord Server Invite Link**__\n{new_inv.url}")
+                await welcome_chan.send(f"__**Discord Server Invite Link**__\n```\n{new_inv.url}\n```")
             else:
-                await msg.edit(content=f"__**Discord Server Invite Link**__\n{new_inv.url}")
+                await msg.edit(content=f"__**Discord Server Invite Link**__\n```\n{new_inv.url}\n```")
 
             await asyncio.sleep(7*24*60*60)
 
