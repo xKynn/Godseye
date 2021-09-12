@@ -276,6 +276,13 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def role(self, ctx):
+        if ctx.channel.id != 886439214105915393:
+            try:
+                await ctx.message.delete()
+            except:
+                pass
+            return await ctx.error("Incorrect channel. Please use <#886439214105915393> channel.")
+
         with open("conf.json") as js:
             dat = json.load(js)
         trole = ctx.message.content.split(" ")[-1]
