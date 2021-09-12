@@ -318,7 +318,8 @@ class Commands(commands.Cog):
                 except:
                     return await ctx.error("Error")
         else:
-            return await ctx.error("This role is not currently setup.")
+            return await ctx.error("This role is not on the list, please use the "
+                                   "`>>role` command to see the approved list.")
 
 
 def setup(bot):
