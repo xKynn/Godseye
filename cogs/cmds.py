@@ -317,6 +317,8 @@ class Commands(commands.Cog):
                                                  , delete_after=5)
                 except:
                     return await ctx.error("Error")
+        else:
+            return await ctx.error("This role is not currently setup.")
 
 
 def setup(bot):
