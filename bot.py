@@ -64,6 +64,12 @@ class Godseye(commands.Bot):
     async def autorole_check(self):
         rainbowctr = 0
         while 1:
+                async for rmsg in self.rolechan.history(limit=100):
+                    if rmsg.id != 886442135069552680:
+                        try:
+                            await rmsg.delete()
+                        except:
+                            pass
                 print("Iter")
                 with open("conf.json") as js:
                     dat = json.load(js)
@@ -191,6 +197,7 @@ class Godseye(commands.Bot):
         with open('conf.json') as f:
             dat = json.load(f)
         self.chronicle = self.get_channel(645817242340294677)
+        self.rolechan = self.get_channel(886439214105915393)
         self.quick_access = dat
         self.rainbow = [Color.from_rgb(148, 0, 211),
                         Color.from_rgb(75, 0, 130),
