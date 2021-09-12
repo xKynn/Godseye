@@ -306,15 +306,17 @@ class Commands(commands.Cog):
             if role in ctx.author.roles:
                 try:
                     await ctx.author.remove_roles(role, reason="Role Command.")
-                    return await ctx.embed_reply(msg=f"Successfully removed {trole}."
+                    await ctx.embed_reply(msg=f"Successfully removed {trole}."
                                                  , delete_after=5)
+                    return await ctx.message.delete()
                 except:
                     return await ctx.error("Error")
             else:
                 try:
                     await ctx.author.add_roles(role, reason="Role Command.")
-                    return await ctx.embed_reply(msg=f"Successfully assigned {trole}."
+                    await ctx.embed_reply(msg=f"Successfully assigned {trole}."
                                                  , delete_after=5)
+                    return await ctx.message.delete()
                 except:
                     return await ctx.error("Error")
         else:
