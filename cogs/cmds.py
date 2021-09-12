@@ -232,7 +232,7 @@ class Commands(commands.Cog):
             return await ctx.error("Insufficient permissions. Must be server owner.")
         with open("conf.json") as js:
             dat = json.load(js)
-        trole = ctx.message.content.split(" ")[-1]
+        trole = " ".join(ctx.message.content.split(" ")[1:])
         role = None
         for srole in ctx.guild.roles:
             if srole.name == trole:
@@ -261,7 +261,7 @@ class Commands(commands.Cog):
             return await ctx.error("Insufficient permissions. Must be server owner.")
         with open("conf.json") as js:
             dat = json.load(js)
-        trole = ctx.message.content.split(" ")[-1]
+        trole = " ".join(ctx.message.content.split(" ")[1:])
 
         if "setuproles" not in dat:
             return await ctx.error("No roles setup!")
@@ -285,9 +285,17 @@ class Commands(commands.Cog):
 
         with open("conf.json") as js:
             dat = json.load(js)
-        trole = ctx.message.content.split(" ")[-1]
+        trole = " ".join(ctx.message.content.split(" ")[1:])
         if "setuproles" not in dat:
             return await ctx.error("No roles setup!")
+
+        if not trole:
+            tx = "Roles:\n"
+            for rl in dat['setuproles']:
+                tx += f"`{rl}`\n"
+            if not dat['setuproles']:
+                tx += "No roles setup. Please ask the owner to setup roles."
+            return await ctx.embed_reply(tx)
 
         if trole.lower() in dat['setuproles']:
             role = None
