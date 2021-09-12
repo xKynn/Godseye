@@ -267,7 +267,7 @@ class Commands(commands.Cog):
             return await ctx.error("No roles setup!")
 
         if trole.lower() in dat['setuproles']:
-            del dat['setuprole'][dat['setuproles'].index(trole.lower())]
+            del dat['setuproles'][dat['setuproles'].index(trole.lower())]
 
         with open("conf.json", "w") as js:
             json.dump(dat, js)
