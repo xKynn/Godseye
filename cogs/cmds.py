@@ -226,5 +226,83 @@ class Commands(commands.Cog):
         await self.bot.change_presence(activity=gm)
         await ctx.embed_reply(msg=f"Successfully changed presence.", delete_after=5)
 
+    @commands.command()
+    async def roleadd(self, ctx):
+        if not ctx.author.id == self.bot.dg.owner.id:
+            return await ctx.error("Insufficient permissions. Must be server owner.")
+        with open("conf.json") as js:
+            dat = json.load(js)
+        trole = ctx.message.content.split(" ")[-1]
+        role = None
+        for srole in ctx.guild.roles:
+            if srole.name == trole:
+                role = srole
+                break
+
+        if not role:
+            return await ctx.error(f"Couldn't find a role named {trole}", delete_after=5)
+        bmem = self.bot.dg.get_member(self.bot.user.id)
+        if role >= bmem.top_role:
+            return await ctx.error(f"Can't assign role equal or higher than the bot's role.", delete_after=5)
+        if "setuproles" not in dat:
+            dat["setuproles"] = []
+        if role.name.lower() in dat['setuproles']:
+            return await ctx.error("Role already setup!")
+        else:
+            dat["setuproles"].append(role.name.lower())
+        with open("conf.json", "w") as js:
+            json.dump(dat, js)
+        return await ctx.embed_reply(msg=f"Successfully setup {role.name}."
+                                     , delete_after=5)
+
+    @commands.command()
+    async def roleclear(self, ctx):
+        if not ctx.author.id == self.bot.dg.owner.id:
+            return await ctx.error("Insufficient permissions. Must be server owner.")
+        with open("conf.json") as js:
+            dat = json.load(js)
+        trole = ctx.message.content.split(" ")[-1]
+
+        if "setuproles" not in dat:
+            return await ctx.error("No roles setup!")
+
+        if trole.lower() in dat['setuproles']:
+            del dat['setuprole'][dat['setuproles'].index(trole.lower())]
+
+        with open("conf.json", "w") as js:
+            json.dump(dat, js)
+        return await ctx.embed_reply(msg=f"Successfully deleted {trole}."
+                                     , delete_after=5)
+
+    @commands.command()
+    async def role(self, ctx):
+        with open("conf.json") as js:
+            dat = json.load(js)
+        trole = ctx.message.content.split(" ")[-1]
+        if "setuproles" not in dat:
+            return await ctx.error("No roles setup!")
+
+        if trole.lower() in dat['setuproles']:
+            role = None
+            for srole in ctx.guild.roles:
+                if srole.name.lower() == trole.lower():
+                    role = srole
+                    break
+            if role in ctx.author.roles:
+                try:
+                    await ctx.author.remove_roles(role, reason="Role Command.")
+                    return await ctx.embed_reply(msg=f"Successfully removed {trole}."
+                                                 , delete_after=5)
+                except:
+                    return await ctx.error("Error")
+            else:
+                try:
+                    await ctx.author.add_roles(role, reason="Role Command.")
+                    return await ctx.embed_reply(msg=f"Successfully assigned {trole}."
+                                                 , delete_after=5)
+                except:
+                    return await ctx.error("Error")
+
+
 def setup(bot):
     bot.add_cog(Commands(bot))
