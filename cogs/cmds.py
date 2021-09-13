@@ -14,7 +14,7 @@ class Commands(commands.Cog):
     async def autorole(self, ctx):
         """ [role] [time] - `O`"""
         if not ctx.author.id == self.bot.dg.owner.id:
-            return await ctx.error("Insufficient permissions. Must be server owner.")
+            return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
         with open("conf.json") as js:
             dat = json.load(js)
         if len(ctx.message.content.split()) == 1:
@@ -107,7 +107,7 @@ class Commands(commands.Cog):
             uid = ctx.message.content.split(" ")[1]
             user = None
             if len(uid) < 2:
-                return await ctx.error("Please mention a user.")
+                return await ctx.error("Please mention a user.", delete_after=5)
             else:
                 uid = int(uid)
 
@@ -229,7 +229,7 @@ class Commands(commands.Cog):
     @commands.command()
     async def roleadd(self, ctx):
         if not ctx.author.id == self.bot.dg.owner.id:
-            return await ctx.error("Insufficient permissions. Must be server owner.")
+            return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
         with open("conf.json") as js:
             dat = json.load(js)
         trole = " ".join(ctx.message.content.split(" ")[1:])
@@ -247,7 +247,7 @@ class Commands(commands.Cog):
         if "setuproles" not in dat:
             dat["setuproles"] = []
         if role.name.lower() in dat['setuproles']:
-            return await ctx.error("Role already setup!")
+            return await ctx.error("Role already setup!", delete_after=5)
         else:
             dat["setuproles"].append(role.name.lower())
         with open("conf.json", "w") as js:
@@ -258,13 +258,13 @@ class Commands(commands.Cog):
     @commands.command()
     async def roleclear(self, ctx):
         if not ctx.author.id == self.bot.dg.owner.id:
-            return await ctx.error("Insufficient permissions. Must be server owner.")
+            return await ctx.error("Insufficient permissions. Must be server owner.", delete_after=5)
         with open("conf.json") as js:
             dat = json.load(js)
         trole = " ".join(ctx.message.content.split(" ")[1:])
 
         if "setuproles" not in dat:
-            return await ctx.error("No roles setup!")
+            return await ctx.error("No roles setup!", delete_after=5)
 
         if trole.lower() in dat['setuproles']:
             del dat['setuproles'][dat['setuproles'].index(trole.lower())]
@@ -281,13 +281,13 @@ class Commands(commands.Cog):
                 await ctx.message.delete()
             except:
                 pass
-            return await ctx.error("Incorrect channel. Please use <#886439214105915393> channel.")
+            return await ctx.error("Incorrect channel. Please use <#886439214105915393> channel.", delete_after=5)
 
         with open("conf.json") as js:
             dat = json.load(js)
         trole = " ".join(ctx.message.content.split(" ")[1:])
         if "setuproles" not in dat:
-            return await ctx.error("No roles setup!")
+            return await ctx.error("No roles setup!", delete_after=5)
 
         if not trole:
             tx = "Roles:\n"
@@ -295,7 +295,12 @@ class Commands(commands.Cog):
                 tx += f"`{rl}`\n"
             if not dat['setuproles']:
                 tx += "No roles setup. Please ask the owner to setup roles."
-            return await ctx.embed_reply(tx)
+            await ctx.embed_reply(tx)
+            try:
+                await ctx.message.delete()
+            except:
+                pass
+            return
 
         if trole.lower() in dat['setuproles']:
             role = None
@@ -310,7 +315,7 @@ class Commands(commands.Cog):
                                                  , delete_after=5)
                     return await ctx.message.delete()
                 except:
-                    return await ctx.error("Error")
+                    return await ctx.error("Error", delete_after=5)
             else:
                 try:
                     await ctx.author.add_roles(role, reason="Role Command.")
@@ -318,10 +323,10 @@ class Commands(commands.Cog):
                                                  , delete_after=5)
                     return await ctx.message.delete()
                 except:
-                    return await ctx.error("Error")
+                    return await ctx.error("Error", delete_after=5)
         else:
             return await ctx.error("This role is not on the list, please use the "
-                                   "`>>role` command to see the approved list.")
+                                   "`>>role` command to see the approved list.", delete_after=5)
 
 
 def setup(bot):
