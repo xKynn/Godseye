@@ -65,7 +65,7 @@ class Godseye(commands.Bot):
         rainbowctr = 0
         while 1:
                 async for rmsg in self.rolechan.history(limit=100):
-                    if rmsg.id != 886442135069552680:
+                    if rmsg.author.id != 641421477476040766:
                         try:
                             await rmsg.delete()
                         except:
