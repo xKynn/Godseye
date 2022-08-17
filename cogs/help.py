@@ -21,13 +21,16 @@ class Help(commands.Cog):
         ut = [c for c in self.bot.commands]
         ut.sort(key=lambda x: x.name)
         tx = "`O` **autorole** [role] [time]\n" \
+             "`O` **autorole** [role] clear\n" \
              "`O` **icon** [url]\n" \
-             "`M` **mute** [user]\n"\
-             "`M` **mutelist**\n"\
-             "`M` **purge** [user] [number]\n"\
-             "`M` **unmute** [user]\n"\
-             "`O` **wipe** [user]\n" \
+             "`M` **mute** [user]\n" \
+             "`M` **mutelist**\n" \
+             "`M` **purge** [user] [number]\n" \
+             "`O` **roleadd** [role]\n" \
+             "`O` **roleclear** [role]\n" \
              "`O` **status** [message]\n" \
+             "`M` **unmute** [user]\n" \
+             "`O` **wipe** [user]\n" \
         # This can't go in the init because help isn't loaded last & thus misses some commands
         em.add_field(name="Commands", value=tx)
         em.add_field(name="Key", value="`O` - Owner\n`M` - Manage Messages", inline=False)
