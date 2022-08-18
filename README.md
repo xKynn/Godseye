@@ -30,7 +30,7 @@ Delete a member's past messages in a specific channel.
 Allows a member to add and remove a role currently setup to be toggleable on the server.
 
 `>>roleadd [role]`\
-Appoints a role to be toggleable on the server. ***bot needs to be on a higher role than the appointed role**
+Appoints a role to be toggleable on the server. ***bot needs to have a higher role than the appointed role**
 
 `>>roleclear [role]`\
 Removes a role from being toggleable on the server.
