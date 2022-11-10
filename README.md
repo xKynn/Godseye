@@ -1,8 +1,5 @@
-# Godseye BOT
-Discord Server Integration
+# Godseye: Discord Server BOT
 
----
-\
 Functionality
 
 `>>autorole [role] [time in seconds]`\
