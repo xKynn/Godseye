@@ -1,5 +1,5 @@
-# Godseye
-Custom Moderation & Surveillance Discord Bot
+# Godseye BOT
+Discord Server Integration
 
 ---
 \
