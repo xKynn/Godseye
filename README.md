@@ -43,4 +43,4 @@ Deletes the entire message history of the inputted user on the server.
 
 \
 \
-*Updated on August 18, 2022*
+*Updated on November 10, 2022*
